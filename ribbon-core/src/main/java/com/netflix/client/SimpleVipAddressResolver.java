@@ -56,6 +56,9 @@ import com.netflix.config.ConfigurationManager;
  */
 public class SimpleVipAddressResolver implements VipAddressResolver {
 
+    /**
+     * 变量模板 ${} 包含在{}里面的算作变量
+     */
     private static final Pattern VAR_PATTERN = Pattern.compile("\\$\\{(.*?)\\}");
 
     /**
@@ -71,10 +74,16 @@ public class SimpleVipAddressResolver implements VipAddressResolver {
         }
         return replaceMacrosFromConfig(vipAddressMacro);
     }
-    
+
+    /**
+     * 私有方法，使用正则处理字符串
+     * @param macro
+     * @return
+     */
     private static String replaceMacrosFromConfig(String macro) {
         String result = macro;
         Matcher matcher = VAR_PATTERN.matcher(result);
+        // TODO: 找到所有的变量，然后替换掉真实值
         while (matcher.find()) {
             String key = matcher.group(1);
             String value = ConfigurationManager.getConfigInstance().getString(key);

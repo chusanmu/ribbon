@@ -26,7 +26,7 @@ import com.netflix.config.DynamicIntProperty;
 /**
  * A {@link ScheduledThreadPoolExecutor} whose core size can be dynamically changed by a given {@link DynamicIntProperty} and 
  * registers itself with a shutdown hook to shut down.
- *
+ * TODO: 它是对JDK源生的任务调度线程池的ScheduledThreadPoolExecutor的一个扩展，它能让线程池的coreSize核心数动态实时生效
  * @author awang
  *
  */
