@@ -21,7 +21,7 @@ import com.netflix.client.config.IClientConfig;
 
 /**
  * A "VipAddress" is a logical name for a Target Server farm.
- *
+ * VIP地址解析器，是目标服务器上的逻辑名称，该处理器帮助解析并获取得到最终的地址
  * @author stonse
  *
  */

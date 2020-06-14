@@ -64,13 +64,27 @@ public class DefaultLoadBalancerRetryHandler implements RetryHandler {
         this.retryNextServer = clientConfig.getOrDefault(CommonClientConfigKey.MaxAutoRetriesNextServer);
         this.retryEnabled = clientConfig.getOrDefault(CommonClientConfigKey.OkToRetryOnAllOperations);
     }
-    
+
+    /**
+     * 是否可以进行重试的异常
+     * TODO: 开启重试的情况下，若是同一台Server, 因为它失败过了，所以需要判断这次的异常类型是啥 是否需要进行重试，若是不同的server, 那就直接重试呗，因为你不知道其是否ok
+     * @param e the original exception
+     * @param sameServer if true, the method is trying to determine if retry can be
+     *        done on the same server. Otherwise, it is testing whether retry can be
+     * @return
+     */
     @Override
     public boolean isRetriableException(Throwable e, boolean sameServer) {
+        /**
+         * 1. 若retryEnabled=false全局关闭了禁止重试，那就不管了
+         * 2. 若retryEnabled=true，那就继续看
+         */
         if (retryEnabled) {
+            // TODO: 3.若是在同一太机器上，所以需要看此次异常类型是啥
             if (sameServer) {
                 return Utils.isPresentAsCause(e, getRetriableExceptions());
             } else {
+                // TODO: 若是不同的server, 那就直接重试呗
                 return true;
             }
         }
