@@ -28,6 +28,11 @@ import java.util.Set;
 
 import com.google.common.reflect.TypeToken;
 
+
+/**
+ * 它是一个抽象类
+ * @param <T>
+ */
 public abstract class CommonClientConfigKey<T> implements IClientConfigKey<T> {
 
     public static final IClientConfigKey<String> AppName = new CommonClientConfigKey<String>("AppName"){};

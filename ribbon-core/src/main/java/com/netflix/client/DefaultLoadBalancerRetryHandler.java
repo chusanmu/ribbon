@@ -31,7 +31,7 @@ import com.netflix.client.config.IClientConfig;
  * A default {@link RetryHandler}. The implementation is limited to
  * known exceptions in java.net. Specific client implementation should provide its own
  * {@link RetryHandler}
- * 
+ *  TODO: 默认的重试实现，它只能识别java.net里的异常做出判断，若有其他异常，继承子类复写相关的方法
  * @author awang
  *
  * @param <T> Type of request
@@ -39,16 +39,32 @@ import com.netflix.client.config.IClientConfig;
  */
 public class DefaultLoadBalancerRetryHandler implements RetryHandler {
 
+    /**
+     * TODO: 这两个异常会进行重试，代表连接不上，这时候重试是可以的
+     */
     @SuppressWarnings("unchecked")
-    private List<Class<? extends Throwable>> retriable = 
+    private List<Class<? extends Throwable>> retriable =
             Lists.<Class<? extends Throwable>>newArrayList(ConnectException.class, SocketTimeoutException.class);
-    
+
+    /**
+     * Ciruit的异常类型
+     */
     @SuppressWarnings("unchecked")
     private List<Class<? extends Throwable>> circuitRelated = 
             Lists.<Class<? extends Throwable>>newArrayList(SocketException.class, SocketTimeoutException.class);
+    /* ---------------- 都可以通过IClientConfig配置 -------------- */
 
+    /**
+     * 默认为0，表示同一台机器上不重试(只执行一次，失败了就失败了)
+     */
     protected final int retrySameServer;
+    /**
+     * 默认值是1，也就是只会再试下面一台机器，不行就不行了
+     */
     protected final int retryNextServer;
+    /**
+     * 重试开关，true开启重试，false 不开启重试
+     */
     protected final boolean retryEnabled;
 
     public DefaultLoadBalancerRetryHandler() {

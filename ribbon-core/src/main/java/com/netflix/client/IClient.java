@@ -29,6 +29,7 @@ import com.netflix.client.config.IClientConfig;
 public interface IClient<S extends ClientRequest, T extends IResponse> {
 
 	/**
+	 * TODO: 执行请求并返回响应
 	 * Execute the request and return the response. It is expected that there is no retry and all exceptions
      * are thrown directly.
 	 */

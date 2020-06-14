@@ -22,6 +22,7 @@ import java.net.URI;
 import java.util.Map;
 
 /**
+ * TODO: 注意 此接口和协议无关，所以没有getStatus(), getStatus()属于http专属
  * Response interface for the client framework.  
  *
  */
@@ -29,6 +30,7 @@ public interface IResponse extends Closeable
 {
    
    /**
+    * TODO: 从响应中获得实体，若是http协议，那就是body体,
     * Returns the raw entity if available from the response 
     */
    public Object getPayload() throws ClientException;
@@ -39,6 +41,7 @@ public interface IResponse extends Closeable
    public boolean hasPayload();
    
    /**
+    * TODO: 如果认为响应成功，则为真，例如http协议的200
     * @return true if the response is deemed success, for example, 200 response code for http protocol.
     */
    public boolean isSuccess();
@@ -50,7 +53,7 @@ public interface IResponse extends Closeable
    public URI getRequestedURI();
    
    /**
-    * 
+    * TODO: 响应头们
     * @return Headers if any in the response.
     */
    public Map<String, ?> getHeaders();   
